@@ -1,1 +1,1 @@
-web: gunicorn exerciseapp.exerciseapp.wsgi
+web: gunicorn exerciseapp.wsgi
