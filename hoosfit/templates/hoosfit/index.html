@@ -13,7 +13,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   <header style="margin-bottom: 5px">
     <nav class="navbar navbar-dark bg-primary">
-      <h1 color="rgb(255, 153, 0)">Hoo's Fit!</h1>
+      <h1 style="color: rgb(255, 153, 0)">Hoo's Fit!</h1>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,7 +22,7 @@
               <li class="nav-item active">
                 <a class="nav-link" href="#">Place Holder 1<span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="#">Place Holder 2</a>
               </li>
             </ul>
@@ -34,7 +34,7 @@
   <div class="container center" style="margin-top: 5px; margin-bottom: 5px">
         <div class="card text-white bg-primary mb-3" style="max-width: 20rem; margin: auto">
           {% if user.is_authenticated %}
-          <div class="card-title">
+          <div class="card-title" style="margin-top: 5px">
             <h3 align="center">Welcome, {{ user.username }} !</h3>
           </div>
           {% else %}
@@ -45,10 +45,10 @@
         </div>
       </div>
 
-<footer class="footer" style="margin-top: 5px; background-color: rgb(22, 87, 161); bottom: 0; position: fixed; width: 100%">
-      <div class="container">
-
-      </div>
-    </footer>
+<nav class="navbar fixed-bottom navbar-dark bg-primary">
+  <div class="container-fluid">
+    <p class="navbar-brand">Footer</p>
+  </div>
+</nav>
 </body>
 
