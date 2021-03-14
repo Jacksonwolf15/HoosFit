@@ -12,8 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   <header style="margin-bottom: 5px">
-    <nav class="navbar navbar-dark bg-dark">
-      <h1>Log-In</h1>
+    <nav class="navbar navbar-dark bg-primary">
+      <h1 color="rgb(255, 153, 0)">Hoo's Fit!</h1>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,25 +32,22 @@
   <body style="background-color: rgb(255, 255, 255)">
 
   <div class="container center" style="margin-top: 5px; margin-bottom: 5px">
-        <div class="card text-white bg-dark mb-3" style="max-width: 20rem; margin: auto">
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem; margin: auto">
           {% if user.is_authenticated %}
-          <div class="card-body">
-            <p>Welcome, {{ user.username }} !</p>
+          <div class="card-title">
+            <h3 align="center">Welcome, {{ user.username }} !</h3>
           </div>
           {% else %}
           <div class="card-title">
-            <h2>Login</h2>
-            </div>
-          <div class="card-body">
-            <a href="{% provider_login_url 'google' %}">Login with Google</a>
-            </div>
+            <h2 align="center"><a href="{% provider_login_url 'google' %}">Login with Google</a></h2>
+          </div>
           {% endif %}
         </div>
       </div>
 
 <footer class="footer" style="margin-top: 5px; background-color: rgb(22, 87, 161); bottom: 0; position: fixed; width: 100%">
       <div class="container">
-        <p style="text-align: right; color: white;">B-07</p>
+
       </div>
     </footer>
 </body>
