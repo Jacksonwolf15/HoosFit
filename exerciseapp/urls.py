@@ -17,8 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
+from hoosfit.views import home, profile
+
 urlpatterns = [
     path('', TemplateView.as_view(template_name='hoosfit/index.html')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('profiles/home/', home),
+    path('profiles/<str:user_id>', profile),
 ]
