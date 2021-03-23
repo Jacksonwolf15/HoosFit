@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from hoosfit.views import home, profile
+from hoosfit.views import home, profile, exercise_home, view_exercises
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='hoosfit/index.html')),
@@ -25,4 +25,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('profiles/home/', home),
     path('profiles/<str:user_id>', profile),
+    path('profiles/<str:user_id>/exercise', exercise_home, name='exercisehome'),
+    path('profiles/<str:user_id>/exercise/view', view_exercises),
 ]

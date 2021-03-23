@@ -1,0 +1,11 @@
+{% block title %}
+Create New Exercise
+{% endblock %}
+
+{% block content %}
+<form method="post" action="/profiles/home">
+  {% csrf_token %}
+  {{form.as_p}}
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}

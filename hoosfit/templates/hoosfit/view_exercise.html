@@ -1,0 +1,9 @@
+{% block title %}
+Exercises
+{% endblock %}
+
+{% block content %}
+    {% for e in user.exercise.all %}
+	<p>{{e.name}}</p>
+    {% endfor %}
+{% endblock %}
