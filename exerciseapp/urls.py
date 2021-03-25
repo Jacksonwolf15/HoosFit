@@ -26,5 +26,5 @@ urlpatterns = [
     path('profiles/home/', home),
     path('profiles/<str:user_id>', profile),
     path('profiles/<str:user_id>/exercise', exercise_home, name='exercisehome'),
-    path('profiles/<str:user_id>/exercise/view', view_exercises),
+    path('profiles/<str:user_id>/exercise/view', view_exercises, name='exerciseview'),
 ]

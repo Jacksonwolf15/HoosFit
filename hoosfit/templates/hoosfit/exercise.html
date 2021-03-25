@@ -3,7 +3,7 @@ Create New Exercise
 {% endblock %}
 
 {% block content %}
-<form method="post" action="/profiles/home">
+<form method="post" action="">  <!-- Need a better redirect from form -->
   {% csrf_token %}
   {{form.as_p}}
   <input type="submit" value="Submit">

@@ -1,6 +1,7 @@
-from django import forms
+from django.forms import ModelForm
+from .models import Exercise
 
-
-class CreateNewExercise(forms.Form):
-    name = forms.CharField(label="Exercise Name", max_length=200)
-    target_reps = forms.IntegerField(label="Target Number of Reps")
+class CreateNewExercise(ModelForm):
+    class Meta:
+        model = Exercise
+        fields = "__all__"

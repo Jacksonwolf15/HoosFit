@@ -3,7 +3,10 @@ Exercises
 {% endblock %}
 
 {% block content %}
-    {% for e in user.exercise.all %}
-	<p>{{e.name}}</p>
+    {% for field in form %}
+    <tr>
+        <td>{{field.label}}</td>
+        <td>{{field.value}}</td>
+    </tr>
     {% endfor %}
 {% endblock %}
