@@ -2,11 +2,16 @@
 Exercises
 {% endblock %}
 
-{% block content %}
-    {% for field in form %}
-    <tr>
-        <td>{{field.label}}</td>
-        <td>{{field.value}}</td>
-    </tr>
+{% if exercise_list %}
+    {% for exercise in exercise_list %}
+      <div class="container center" style="margin-top: 5px; margin-bottom: 5px">
+        <div class="card text-white bg-dark mb-3" style="max-width: 20rem; margin: auto">
+            <div class="card-body">
+                <h5 class="card-title">{{exercise.exercise_name}}</h5>
+            </div>
+        </div>
+      </div>
     {% endfor %}
-{% endblock %}
+{% else %}
+    <p>No exercises yet</p>
+{% endif %}

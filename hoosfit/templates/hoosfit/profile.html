@@ -36,11 +36,11 @@
           {% if user.is_authenticated %}
           <div class="card-title" style="margin-top: 5px">
             <h3 align="center">Welcome, {{ user.username }} !</h3>
-            <h2 style="background-color:powderblue;" align="center"><a href="{% url 'exercisehome' user_id=user.username %}">Add Exercise</a></h2>
+            <h2 align="center"><a style="color: white" href="{% url 'exercisehome' user_id=user.username %}">Add Exercise</a></h2>
           </div>
           {% else %}
           <div class="card-title">
-            <h2 align="center"><a href="{% provider_login_url 'google' %}">Login with Google</a></h2>
+            <h2 align="center"><a style="color: white" href="{% provider_login_url 'google' %}">Login with Google</a></h2>
           </div>
           {% endif %}
         </div>
