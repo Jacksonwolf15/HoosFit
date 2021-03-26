@@ -1,17 +1,26 @@
 language: python
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"      # current default Python on Travis CI
-  - "3.7"
-  - "3.8"
-  - "3.9"
-  - "3.9-dev"  # 3.9 development branch
-  - "nightly"  # nightly build
-# command to install dependencies
+- '3.8'
 install:
-  - pip install -r requirements.txt
-# command to run tests
+- pip install -r requirements.txt
 script:
-  - pytest
+- python manage.py test
+services:
+- postgresql
+env:
+- DB_NAME=testdb DB_USER=test DB_PASS=test DB_HOST=localhost
+before_script:
+- psql -U postgres -c "CREATE USER test WITH PASSWORD 'test';"
+- psql -U postgres -c "ALTER USER test PASSWORD 'test';"
+- psql -U postgres -c "ALTER USER test CREATEDB;"
+- psql -U postgres -c "CREATE DATABASE testdb;"
+- psql -U postgres -c "ALTER ROLE test superuser;"
+- python manage.py collectstatic
+deploy:
+  provider: heroku
+  api_key:
+    secure: MZvfV6gGuIlhpGA5zl54kCL28F+xusBzb8oy7Y9LuB7/LVoAQ9XZExlRPkgfbT7KPjr9weOdBKrxqlu7u5WVg/fA767UbavpGpIwUk1HUoDlrmdDIZNfe9wo8o5CVHlanfiA0lLMbJwwRydUmyshBrcUqGnFO3flZe61eap6E+t9ciLkNGdI5CGxu+AJLlzIpxd7t8mAkIbZOZa6YWaRWoZguaCVCj6q42z6DVvsvoQNNGw24TLHUFwRmdXI84pHegPiisBflNGcgolGRxB8rI6OM3iz+vUzPufZ5xmmXilcx4t+mzFkPVclLC+AyicdS742inUGF/QY4RmPAiu/cR67FwQjOgpjrbakaIBVRZQ5cicJlkrzjW/CvQRtAHlXE/VFAyGZxRVLQm6doO9tG5BCqFjrj3MrRRIqxwaKyvebuI+NftOiRrYxFUofu0PVUZOhCdnAcSyniuXJ6MjE9rgxtlzU7pNoFQhX9AkzdZuQnwKPKP8QiKdo5t2gHZS1wd4hUE4x1gFM/0hQBObVmc2NLCA0TqtUGPVly1CTU8loYzC2fS8sEErnbJ7pocmL1VTxaOnbkxiOjNHyE7ftA5F57/8u9+FfGUmtmJGQ0Gj+PxoJEb9zcKWP8Zb3mQKCLisfIBfBBLFXnhNP7jcCazWMRtnA1qNeO6Bk5/51wfU=
+  app: cs3240-team-b-07
+  on:
+    repo: uva-cs3240-s20/project-b-07
+
