@@ -18,8 +18,6 @@ before_script:
 - python manage.py collectstatic
 deploy:
   provider: heroku
-  api_key:
-    secure: MZvfV6gGuIlhpGA5zl54kCL28F+xusBzb8oy7Y9LuB7/LVoAQ9XZExlRPkgfbT7KPjr9weOdBKrxqlu7u5WVg/fA767UbavpGpIwUk1HUoDlrmdDIZNfe9wo8o5CVHlanfiA0lLMbJwwRydUmyshBrcUqGnFO3flZe61eap6E+t9ciLkNGdI5CGxu+AJLlzIpxd7t8mAkIbZOZa6YWaRWoZguaCVCj6q42z6DVvsvoQNNGw24TLHUFwRmdXI84pHegPiisBflNGcgolGRxB8rI6OM3iz+vUzPufZ5xmmXilcx4t+mzFkPVclLC+AyicdS742inUGF/QY4RmPAiu/cR67FwQjOgpjrbakaIBVRZQ5cicJlkrzjW/CvQRtAHlXE/VFAyGZxRVLQm6doO9tG5BCqFjrj3MrRRIqxwaKyvebuI+NftOiRrYxFUofu0PVUZOhCdnAcSyniuXJ6MjE9rgxtlzU7pNoFQhX9AkzdZuQnwKPKP8QiKdo5t2gHZS1wd4hUE4x1gFM/0hQBObVmc2NLCA0TqtUGPVly1CTU8loYzC2fS8sEErnbJ7pocmL1VTxaOnbkxiOjNHyE7ftA5F57/8u9+FfGUmtmJGQ0Gj+PxoJEb9zcKWP8Zb3mQKCLisfIBfBBLFXnhNP7jcCazWMRtnA1qNeO6Bk5/51wfU=
   app: cs3240-team-b-07
   on:
     repo: uva-cs3240-s20/project-b-07
