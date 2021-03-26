@@ -1,23 +1,17 @@
 language: python
 python:
-- '3.8'
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"      # current default Python on Travis CI
+  - "3.7"
+  - "3.8"
+  - "3.9"
+  - "3.9-dev"  # 3.9 development branch
+  - "nightly"  # nightly build
+# command to install dependencies
 install:
-- pip install -r requirements.txt
+  - pip install -r requirements.txt
+# command to run tests
 script:
-- python manage.py test
-services:
-- postgresql
-env:
-- DB_NAME=testdb DB_USER=test DB_PASS=test DB_HOST=localhost
-before_script:
-- psql -U postgres -c "CREATE USER test WITH PASSWORD 'test';"
-- psql -U postgres -c "ALTER USER test PASSWORD 'test';"
-- psql -U postgres -c "ALTER USER test CREATEDB;"
-- psql -U postgres -c "CREATE DATABASE testdb;"
-- psql -U postgres -c "ALTER ROLE test superuser;"
-- python manage.py collectstatic
-deploy:
-  provider: heroku
-  app: cs3240-team-b-07
-  on:
-    repo: uva-cs3240-s20/project-b-07
+  - pytest
