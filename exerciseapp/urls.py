@@ -21,7 +21,7 @@ from hoosfit.views import home, profile, exercise_home, ExerciseAdd, ExerciseVie
 
 app_name = 'exerciseapp'
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='hoosfit/index.html')),
+    path('', TemplateView.as_view(template_name='hoosfit/index.html'), name='start'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('profiles/home/', home),
