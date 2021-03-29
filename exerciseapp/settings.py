@@ -84,8 +84,12 @@ WSGI_APPLICATION = 'exerciseapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -132,7 +136,7 @@ AUTHENTICATION_BACKENDS = (
  'django.contrib.auth.backends.ModelBackend',
  'allauth.account.auth_backends.AuthenticationBackend',
  )
-SITE_ID = 1
+SITE_ID = 2
 LOGIN_REDIRECT_URL = '/profiles/home/'
 
 SOCIALACCOUNT_PROVIDERS = {
