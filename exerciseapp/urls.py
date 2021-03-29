@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from hoosfit.views import home, profile, exercise_home, ExerciseView
+from hoosfit.views import home, profile, exercise_home, ExerciseAdd, ExerciseView
 
 app_name = 'exerciseapp'
 urlpatterns = [
@@ -25,7 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('profiles/home/', home),
-    path('profiles/<str:user_id>/', profile),
-    path('profiles/<str:user_id>/exercise/', exercise_home, name='exercisehome'),
+    path('profiles/<str:user_id>/', profile, name='homepage'),
+    path('profiles/<str:user_id>/exercise/', ExerciseAdd.as_view(), name='exerciseadd'),
+    path('profiles/<str:user_id>/exercise/submit/', exercise_home, name='exercisesubmit'),
     path('profiles/<str:user_id>/exercise/view/', ExerciseView.as_view(), name='exerciseview'),
 ]

@@ -19,7 +19,6 @@ def home(request):
 def profile(request, user_id):
     return render(request, 'hoosfit/profile.html')
 
-
 def exercise_home(request, user_id):
     context = {}
     if request.method == "POST":
@@ -29,12 +28,14 @@ def exercise_home(request, user_id):
             exercise.user = request.user
             exercise.save()
         context['form'] = form
-        context['user_id'] = user_id
     else:
         form = CreateNewExercise()
         context['form'] = form
-        context['user_id'] = user_id
-    return render(request, "hoosfit/exercise.html", context)
+    return HttpResponseRedirect(reverse('exerciseview', kwargs={'user_id' : user_id}))
+
+class ExerciseAdd(generic.ListView):
+    model = Exercise
+    template_name = 'hoosfit/exercise.html'
 
 
 class ExerciseView(generic.ListView):
@@ -43,9 +44,3 @@ class ExerciseView(generic.ListView):
 
     def get_queryset(self):
         return Exercise.objects.all()
-
-#def view_exercises(request, user_id):  # this currently throws an error
-    #form = CreateNewExercise(request.GET)
-    #results = form.objects.all()  # specifically on this line
-    #context = {'results' : results}
-    #return render(request, 'hoosfit/view_exercise.html', context)
