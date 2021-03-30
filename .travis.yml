@@ -1,0 +1,14 @@
+language: python
+python:
+- '3.8'
+install:
+- pip install -r requirements-travis.txt
+script:
+- python manage.py test
+deploy:
+  provider: heroku
+  api_key:
+    secure: AKrQoC/DOQBrPy2gYGccUjbCUUASMhafddX306Ri48WqTBSn13YAD2y1K8aYknyXoW6rfS/NgS0RVQIgCQUlKCyI/PJWSZqoHzm2k5Fws3t2eGd599RnnmAAhd2ZTr90desq9ID6qRnFcmMuNpKBd2vewcYCF7D6tn+yBaNk9OuilZVXGTbY23f/0glptDK30GwavL8xX6y5L2SPANwZC0EQbXtrqHHBidpadQmFPTu51t5tvFApV3C4lLcY3CA1nF62BJKGHsaIGy8kEWPROTzhlYFnqZ+uZwlPMYXSj42NhtJ8I6HlP1uBuG8Jz7JwT4JSC42yvZUwAmv1Hj50ycqx/wC5GqpaUWo2H31l6WhCJFACKhQu3weiAKOqLX7Kky/FpldHVPp3RbZi/yIr+m+tPQ1zhTSnDpicB/C9ge9DgU2G5SIk89TmZ3SCNNNTsbq2gb56zFLL0gnSSoltMHFyBw1Ne77uzUKbZY2sFN1YOAbX4aRYWREAlcM0sNR87YbJK/HtgdzO6pbQFZmLZLqw41a4jSJcnBFoHVidOVBUoxezCVyN9Exdy68FQsmXiNndSXpF9zHIiM+NN+PA8w5XIzO34FFFyl5hkUXHlI7ZNbe4BAy7FFXPfbXQaeQB6aFcSWy5EQ6cByOBkakwebrmpk3kK+ks/mmhk4ufuAg=
+  app: hoos-fit
+  on:
+    repo: uva-cs3240-s21/project-b-07
