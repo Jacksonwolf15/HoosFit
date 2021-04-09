@@ -4,8 +4,8 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.decorators import login_required
-from .forms import CreateNewExercise
-from .models import Exercise
+from .forms import CreateNewExercise, CreateNewPlaylist, CreateNewExerciseWithPlaylist
+from .models import Exercise, ExercisePlaylist
 
 
 # Create your views here.
@@ -22,7 +22,12 @@ def profile(request, user_id):
 def exercise_home(request, user_id):
     context = {}
     if request.method == "POST":
-        form = CreateNewExercise(request.POST)
+        if len(ExercisePlaylist.objects.filter(user=request.user)) > 0:
+            form = CreateNewExerciseWithPlaylist(request.POST)
+            context['playlists'] = ExercisePlaylist.objects.filter(user=request.user)
+        else:
+            form = CreateNewExercise(request.POST)
+            context['playlist'] = False
         if form.is_valid():
             exercise = form.save(commit=False)
             exercise.user = request.user
@@ -31,11 +36,32 @@ def exercise_home(request, user_id):
     else:
         form = CreateNewExercise()
         context['form'] = form
-    return HttpResponseRedirect(reverse('exerciseview', kwargs={'user_id' : user_id}))
+    return HttpResponseRedirect(reverse('exerciseview', kwargs={'user_id' : user_id}), context)
+
 
 class ExerciseAdd(generic.ListView):
     model = Exercise
     template_name = 'hoosfit/exercise.html'
+
+
+def exercise_playlist_home(request, user_id):
+    context = {}
+    if request.method == "POST":
+        form = CreateNewPlaylist(request.POST)
+        if form.is_valid():
+            playlist = form.save(commit=False)
+            playlist.user = request.user
+            playlist.save()
+        context['form'] = form
+    else:
+        form = CreateNewPlaylist()
+        context['form'] = form
+    return HttpResponseRedirect(reverse('exerciseadd', kwargs={'user_id' : user_id}))
+
+
+class PlaylistAdd(generic.ListView):
+    model = ExercisePlaylist
+    template_name = 'hoosfit/playlist.html'
 
 
 class ExerciseView(generic.ListView):
