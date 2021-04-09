@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from hoosfit.views import home, profile, exercise_home, exercise_playlist_home, ExerciseAdd, ExerciseView, PlaylistAdd, AwardView
+from hoosfit.views import home, profile, create_exercise, create_playlist, ExerciseCreate, ExerciseView, PlaylistCreate, AwardView, SelectExercise
 
 app_name = 'exerciseapp'
 urlpatterns = [
@@ -26,10 +26,12 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('profiles/home/', home),
     path('profiles/<str:user_id>/', profile, name='homepage'),
-    path('profiles/<str:user_id>/exercise/', ExerciseAdd.as_view(), name='exerciseadd'),
-    path('profiles/<str:user_id>/exercise/submit/', exercise_home, name='exercisesubmit'),
-    path('profiles/<str:user_id>/playlist/', PlaylistAdd.as_view(), name='playlistadd'),
-    path('profiles/<str:user_id>/playlist/submit/', exercise_playlist_home, name='playlistsubmit'),
+    path('profiles/<str:user_id>/exercise/', ExerciseCreate.as_view(), name='exercisecreate'),
+    path('profiles/<str:user_id>/exercise/submit/', create_exercise, name='exercisesubmit'),
     path('profiles/<str:user_id>/exercise/view/', ExerciseView.as_view(), name='exerciseview'),
+    path('profiles/<str:user_id>/playlist/', PlaylistCreate.as_view(), name='playlistcreate'),
+    path('profiles/<str:user_id>/playlist/submit/', create_playlist, name='playlistsubmit'),
+    path('profiles/<str:user_id>/playlist/select/', SelectExercise.as_view(), name='selectexercises'),
+    path('profiles/<str:user_id>/playlist/select/submit/', SelectExercise.as_view(), name='selectsubmit'),
     path('profiles/<str:user_id>/awards/', AwardView.as_view(), name='awardview')
 ]

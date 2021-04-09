@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.decorators import login_required
-from .forms import CreateNewExercise, CreateNewPlaylist, CreateNewExerciseWithPlaylist
+from .forms import CreateNewExercise, CreateNewPlaylist
 from .models import Exercise, ExercisePlaylist, Award
 
 
@@ -19,7 +19,7 @@ def home(request):
 def profile(request, user_id):
     return render(request, 'hoosfit/profile.html')
 
-def exercise_home(request, user_id):
+def create_exercise(request, user_id):
     context = {}
     if request.method == "POST":
         form = CreateNewExercise(request.POST)
@@ -34,12 +34,16 @@ def exercise_home(request, user_id):
     return HttpResponseRedirect(reverse('exerciseview', kwargs={'user_id' : user_id}))
 
 
-class ExerciseAdd(generic.ListView):
+class ExerciseCreate(generic.ListView):
     model = Exercise
     template_name = 'hoosfit/exercise.html'
 
+class SelectExercise(generic.ListView):
+    model = Exercise
+    template_name = 'hoosfit/select_exercise.html'
 
-def exercise_playlist_home(request, user_id):
+
+def create_playlist(request, user_id):
     context = {}
     if request.method == "POST":
         form = CreateNewPlaylist(request.POST)
@@ -51,10 +55,10 @@ def exercise_playlist_home(request, user_id):
     else:
         form = CreateNewPlaylist()
         context['form'] = form
-    return HttpResponseRedirect(reverse('exerciseadd', kwargs={'user_id' : user_id}))
+    return HttpResponseRedirect(reverse('selectexercises', kwargs={'user_id' : user_id}))
 
 
-class PlaylistAdd(generic.ListView):
+class PlaylistCreate(generic.ListView):
     model = ExercisePlaylist
     template_name = 'hoosfit/playlist.html'
 

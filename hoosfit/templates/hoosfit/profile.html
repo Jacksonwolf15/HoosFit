@@ -23,7 +23,7 @@
                   <a class="nav-link" href="{% url 'homepage' user_id=user.username %}">Home<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'exerciseadd' user_id=user.username %}">Add Exercise</a>
+                  <a class="nav-link" href="{% url 'exercisecreate' user_id=user.username %}">Add Exercise</a>
                 </li>
               </ul>
           </div>
@@ -36,8 +36,8 @@
           {% if user.is_authenticated %}
           <div class="card-title" style="margin-top: 5px">
             <h3 align="center">Welcome, {{ user.username }} !</h3>
-            <h2 align="center"><a style="color: white" href="{% url 'exerciseadd' user_id=user.username %}">Add Exercise</a></h2>
-            <h2 align="center"><a style="color: white" href="{% url 'playlistadd' user_id=user.username %}">Create an Exercise Playlist</a></h2>
+            <h2 align="center"><a style="color: white" href="{% url 'exercisecreate' user_id=user.username %}">Add Exercise</a></h2>
+            <h2 align="center"><a style="color: white" href="{% url 'playlistcreate' user_id=user.username %}">Create an Exercise Playlist</a></h2>
           </div>
           {% else %}
           <div class="card-title">

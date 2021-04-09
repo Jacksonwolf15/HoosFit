@@ -22,7 +22,7 @@
                     <a class="nav-link" href="{% url 'homepage' user_id=user.username %}">Home<span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'exerciseadd' user_id=user.username %}">Add Exercise</a>
+                    <a class="nav-link" href="{% url 'exercisecreate' user_id=user.username %}">Add Exercise</a>
                   </li>
                 </ul>
             </div>
@@ -35,12 +35,12 @@
       <div class="row justify-content-center">
         <div class="card w-75" style="border: 1px solid black">
         <div>
-          <h1 style="padding: 5px; border-bottom: 1px groove black; background-color: rgb(255, 153, 0);">Create a New Exercise!</h1>
+          <h1 style="padding: 5px; border-bottom: 1px groove black; background-color: rgb(255, 153, 0);">Create a New Playlist!</h1>
         </div>
         {% endblock %}
           <div class="card-body">
             {% block content %}
-            <form method="post" action="{% url 'playlistsubmit' user_id=user.username %}">  <!-- Need a better redirect from form -->
+            <form method="post" action="{% url 'playlistsubmit' user_id=user.username %}">
               {% csrf_token %}
               <div class="mb-3 row">
                 <label for="id_exercise_name" class="col-sm-2 col-form-label">Playlist Name:</label>
@@ -58,11 +58,6 @@
           
         </div>
         
-      </div>
-      <div class="row justify-content-center" style="margin-top: 20px">
-        <form method="get" action="{% url 'exerciseadd' user_id=user.username %}">
-          <button class="btn btn-primary" type="submit" >Add Exercises To Your New Playlist!</button>
-        </form>
       </div>
     </div>
 
