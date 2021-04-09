@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class ExercisePlaylist (models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='playlists')
     playlist_name = models.CharField(max_length=200)
+    exercises = models.ManyToManyField(Exercise)
 
     def __str__(self):
         return self.playlist_name
@@ -11,10 +12,16 @@ class ExercisePlaylist (models.Model):
 
 class Exercise (models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE) 
-    playlist = models.ForeignKey(ExercisePlaylist, null=True, default=1, on_delete=models.SET_DEFAULT, related_name='exercises')
     exercise_name = models.CharField(max_length=200)
     target_reps = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.exercise_name
 
+class Award (models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    exercise = models.OneToOneField(Exercise, on_delete=models.CASCADE)
+    award_name = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.award_name

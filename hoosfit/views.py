@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from .forms import CreateNewExercise, CreateNewPlaylist, CreateNewExerciseWithPlaylist
-from .models import Exercise, ExercisePlaylist
+from .models import Exercise, ExercisePlaylist, Award
 
 
 # Create your views here.
@@ -22,12 +22,7 @@ def profile(request, user_id):
 def exercise_home(request, user_id):
     context = {}
     if request.method == "POST":
-        if len(ExercisePlaylist.objects.filter(user=request.user)) > 0:
-            form = CreateNewExerciseWithPlaylist(request.POST)
-            context['playlists'] = ExercisePlaylist.objects.filter(user=request.user)
-        else:
-            form = CreateNewExercise(request.POST)
-            context['playlist'] = False
+        form = CreateNewExercise(request.POST)
         if form.is_valid():
             exercise = form.save(commit=False)
             exercise.user = request.user
@@ -36,7 +31,7 @@ def exercise_home(request, user_id):
     else:
         form = CreateNewExercise()
         context['form'] = form
-    return HttpResponseRedirect(reverse('exerciseview', kwargs={'user_id' : user_id}), context)
+    return HttpResponseRedirect(reverse('exerciseview', kwargs={'user_id' : user_id}))
 
 
 class ExerciseAdd(generic.ListView):
@@ -70,3 +65,7 @@ class ExerciseView(generic.ListView):
 
     def get_queryset(self):
         return Exercise.objects.all()
+
+class AwardView(generic.ListView):
+    model = Award
+    template_name = 'hoosfit/view_awards.html'

@@ -25,9 +25,8 @@
         <div class="card text-white bg-primary mb-3" style="max-width: 20rem; margin: auto">
           {% if user.is_authenticated %}
           <div class="card-title" style="margin-top: 5px">
-            <h3 align="center">Welcome, {{ user.firstname }} !</h3>
+            <h3 align="center">Welcome, {{ user.username }} !</h3>
             <h2 align="center"><a style="color: white" href="{% url 'exerciseadd' user_id=user.username %}">Add Exercise</a></h2>
-            <h2 align="center"><a style="color: white" href="{% url 'playlistadd' user_id=user.username %}">Create an Exercise Playlist</a></h2>
           </div>
           {% else %}
           <div class="card-title">
@@ -37,10 +36,9 @@
         </div>
       </div>
 
-<nav class="navbar fixed-bottom navbar-dark bg-primary" style="margin-top: 5px;">
+<nav class="navbar fixed-bottom navbar-dark bg-primary">
   <div class="container-fluid" style="text-align: right">
     <p class="navbar-brand">Group B-07</p>
   </div>
 </nav>
 </body>
-
