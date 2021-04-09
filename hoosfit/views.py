@@ -71,9 +71,3 @@ class ExerciseView(generic.ListView):
 
     def get_queryset(self):
         return Exercise.objects.all()
-
-#def view_exercises(request, user_id):  # this currently throws an error
-    #form = CreateNewExercise(request.GET)
-    #results = form.objects.all()  # specifically on this line
-    #context = {'results' : results}
-    #return render(request, 'hoosfit/view_exercise.html', context)
