@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelMultipleChoiceField, CharField, CheckboxSelectMultiple
 from .models import Exercise, ExercisePlaylist
 
 class CreateNewExercise(ModelForm):
@@ -9,4 +9,9 @@ class CreateNewExercise(ModelForm):
 class CreateNewPlaylist(ModelForm):
     class Meta:
         model = ExercisePlaylist
-        exclude = ['user', 'exercises']
+        exclude = ['user']
+    playlist_name = CharField()
+    exercises = ModelMultipleChoiceField(
+        queryset=Exercise.objects.all(),
+        widget=CheckboxSelectMultiple
+    )

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from hoosfit.views import home, profile, create_exercise, create_playlist, ExerciseCreate, ExerciseView, PlaylistCreate, AwardView, SelectExercise
+from hoosfit.views import home, profile, create_exercise, create_playlist, ExerciseCreate, ExerciseView, PlaylistCreate, AwardView, PlaylistView
 
 app_name = 'exerciseapp'
 urlpatterns = [
@@ -31,7 +31,6 @@ urlpatterns = [
     path('profiles/<str:user_id>/exercise/view/', ExerciseView.as_view(), name='exerciseview'),
     path('profiles/<str:user_id>/playlist/', PlaylistCreate.as_view(), name='playlistcreate'),
     path('profiles/<str:user_id>/playlist/submit/', create_playlist, name='playlistsubmit'),
-    path('profiles/<str:user_id>/playlist/select/', SelectExercise.as_view(), name='selectexercises'),
-    path('profiles/<str:user_id>/playlist/select/submit/', SelectExercise.as_view(), name='selectsubmit'),
-    path('profiles/<str:user_id>/awards/', AwardView.as_view(), name='awardview')
+    path('profiles/<str:user_id>/playlist/view/', PlaylistView.as_view(), name='playlistview'),
+    path('profiles/<str:user_id>/awards/', AwardView.as_view(), name='awardview'),
 ]
