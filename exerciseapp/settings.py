@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'exerciseapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'hoosfit',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'NAME': 'ddm2k4uqqvdrlg',
+        'USER': 'jtgfejsrlxmfda',
+        'PASSWORD': '52782f4396bcfaf63d023cc1d73b74f4e3c28b161fdb11ae7c7c21432ff44364',
+        'HOST': 'ec2-18-233-83-165.compute-1.amazonaws.com',
         'PORT': '5432'
     }
 }
