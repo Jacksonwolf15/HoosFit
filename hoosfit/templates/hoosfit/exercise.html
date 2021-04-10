@@ -22,7 +22,7 @@
                 <a class="nav-link" href="{% url 'homepage' user_id=user.username %}">Home<span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'exerciseadd' user_id=user.username %}">Add Exercise</a>
+                <a class="nav-link" href="{% url 'exercisecreate' user_id=user.username %}">Add Exercise</a>
               </li>
             </ul>
         </div>
@@ -40,7 +40,7 @@
         {% endblock %}
           <div class="card-body">
             {% block content %}
-            <form method="post" action="{% url 'exercisesubmit' user_id=user.username %}">  <!-- Need a better redirect from form -->
+            <form method="post" action="{% url 'exercisesubmit' user_id=user.username %}">
               {% csrf_token %}
               <div class="mb-3 row">
                 <label for="id_user" class="col-sm-2 col-form-label"><h5 class="card-title">User:</h5></label>

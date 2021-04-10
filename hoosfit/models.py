@@ -1,13 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
-
 class Exercise (models.Model):
-    user = models.CharField(max_length=200, null=True) #why would we give them any option for a user? shouldn't it just be them
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE) 
     exercise_name = models.CharField(max_length=200)
-    target_reps = models.IntegerField(default=0)
+    target_reps = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.exercise_name
+
+class ExercisePlaylist (models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='playlists')
+    playlist_name = models.CharField(max_length=200)
+    exercises = models.ManyToManyField(Exercise)
+
+    def __str__(self):
+        return self.playlist_name
+
+class Award (models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    exercise = models.OneToOneField(Exercise, on_delete=models.CASCADE)
+    award_name = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.award_name
