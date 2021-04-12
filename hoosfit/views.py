@@ -6,7 +6,7 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 from .forms import CreateNewExercise, CreateNewPlaylist
-from .models import Exercise, ExercisePlaylist, Award
+from .models import Exercise, ExercisePlaylist, Award, Profile
 
 
 # Create your views here.
@@ -18,6 +18,8 @@ def home(request):
 
 
 def profile(request, user_id):
+    request.user.profile.streak_number += 1
+    request.user.profile.save()
     return render(request, 'hoosfit/profile.html')
 
 def create_exercise(request, user_id):
@@ -76,3 +78,7 @@ class PlaylistView(generic.ListView):
 class AwardView(generic.ListView):
     model = Award
     template_name = 'hoosfit/view_awards.html'
+
+# class StreakView(generic.DetailView):
+#     model = Streak
+#     template_name = 'hoosfit/profile.html'
