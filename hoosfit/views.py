@@ -44,6 +44,12 @@ class PlaylistCreate(CreateView):
     form_class = CreateNewPlaylist
     template_name = 'hoosfit/playlist.html'
 
+    # def get_form_kwargs(self):
+    #     kwargs = super(PlaylistCreate, self).get_form_kwargs()
+    #     kwargs['user'] = self.request.user
+    #     return kwargs
+
+
 def create_playlist(request, user_id):
     context = {}
     if request.method == "POST":
@@ -64,14 +70,14 @@ class ExerciseView(generic.ListView):
     context_object_name = 'exercise_list'
 
     def get_queryset(self):
-        return Exercise.objects.all()
+        return Exercise.objects.filter(user__exact = self.request.user)
 
 class PlaylistView(generic.ListView):
     template_name = 'hoosfit/view_playlists.html'
     context_object_name = 'playlist_list'
 
     def get_queryset(self):
-        return ExercisePlaylist.objects.all()
+        return ExercisePlaylist.objects.filter(user__exact = self.request.user)
 
 class AwardView(generic.ListView):
     model = Award
