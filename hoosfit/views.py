@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
 from django.views import generic
+import datetime
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
-from .forms import CreateNewExercise, CreateNewPlaylist
-from .models import Exercise, ExercisePlaylist, Award
+from .forms import CreateNewExercise, CreateNewWorkout
+from .models import Exercise, Workout, Award
 
 
 # Create your views here.
@@ -19,6 +20,37 @@ def home(request):
 
 def profile(request, user_id):
     return render(request, 'hoosfit/profile.html')
+
+class ExerciseCreate(generic.ListView):
+    model = Exercise
+    template_name = 'hoosfit/exercise.html'
+
+class WorkoutCreate(CreateView):
+    model = Workout
+    form_class = CreateNewWorkout
+    template_name = 'hoosfit/workout.html'
+
+class ExerciseView(generic.ListView):
+    template_name = 'hoosfit/view_exercise.html'
+    context_object_name = 'exercise_list'
+
+    def get_queryset(self):
+        return Exercise.objects.filter(user__exact = self.request.user, date=datetime.date(2000,1,1))
+
+class WorkoutView(generic.DetailView):
+    model = Workout
+    template_name = 'hoosfit/workout_form.html'
+    context_object_name = 'workout'
+    
+class WorkoutSummary(generic.DetailView):
+    model = Workout
+    template_name = 'hoosfit/workout_summary.html'
+    context_object_name = 'workout'
+
+class AwardView(generic.ListView):
+    model = Award
+    template_name = 'hoosfit/view_awards.html'
+
 
 def create_exercise(request, user_id):
     context = {}
@@ -35,50 +67,31 @@ def create_exercise(request, user_id):
     return HttpResponseRedirect(reverse('exerciseview', kwargs={'user_id' : user_id}))
 
 
-class ExerciseCreate(generic.ListView):
-    model = Exercise
-    template_name = 'hoosfit/exercise.html'
-
-class PlaylistCreate(CreateView):
-    model = ExercisePlaylist
-    form_class = CreateNewPlaylist
-    template_name = 'hoosfit/playlist.html'
-
-    # def get_form_kwargs(self):
-    #     kwargs = super(PlaylistCreate, self).get_form_kwargs()
-    #     kwargs['user'] = self.request.user
-    #     return kwargs
-
-
-def create_playlist(request, user_id):
-    context = {}
+def create_workout(request, user_id):
     if request.method == "POST":
-        form = CreateNewPlaylist(request.POST)
+        form = CreateNewWorkout(request.POST)
         if form.is_valid():
-            playlist = form.save(commit=False)
-            playlist.user = request.user
-            playlist.save()
+            workout = form.save(commit=False)
+            workout.user = request.user
+            workout.save()
             form.save_m2m()
-        context['form'] = form
     else:
-        form = CreateNewPlaylist()
-        context['form'] = form
-    return HttpResponseRedirect(reverse('playlistview', kwargs={'user_id' : user_id}))
+        form = CreateNewWorkout()
+    return HttpResponseRedirect(reverse('workoutstart', kwargs={'user_id' : user_id, 'pk' : workout.id}))
 
-class ExerciseView(generic.ListView):
-    template_name = 'hoosfit/view_exercise.html'
-    context_object_name = 'exercise_list'
 
-    def get_queryset(self):
-        return Exercise.objects.filter(user__exact = self.request.user)
-
-class PlaylistView(generic.ListView):
-    template_name = 'hoosfit/view_playlists.html'
-    context_object_name = 'playlist_list'
-
-    def get_queryset(self):
-        return ExercisePlaylist.objects.filter(user__exact = self.request.user)
-
-class AwardView(generic.ListView):
-    model = Award
-    template_name = 'hoosfit/view_awards.html'
+def log_workout(request, user_id, pk):
+    context = {}
+    for data in request.POST:
+        try:
+            name = data
+            reps = request.POST[data]
+            exercise = Exercise()
+            exercise.exercise_name = name
+            exercise.reps = reps
+            exercise.user = request.user
+            context[name] = reps 
+            exercise.save()
+        except:
+            continue  # need to have fallback incase of error (or maybe not)
+    return HttpResponseRedirect(reverse('workoutsummary', kwargs={'user_id' : user_id, 'pk' : pk})) # also need to pass data to summary

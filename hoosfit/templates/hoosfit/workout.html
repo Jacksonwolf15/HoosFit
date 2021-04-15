@@ -35,35 +35,16 @@
       <div class="row justify-content-center">
         <div class="card w-75" style="border: 1px solid black">
         <div>
-          <h1 style="padding: 5px; border-bottom: 1px groove black; background-color: rgb(255, 153, 0);">Create a New Playlist!</h1>
+          <h1 style="padding: 5px; border-bottom: 1px groove black; background-color: rgb(255, 153, 0);">Select your exercises</h1>
         </div>
         {% endblock %}
           <div class="card-body">
             {% block content %}
-            <form method='POST' action="{% url 'playlistsubmit' user_id=user.username %}" enctype='multipart/form-data'>
+            <form method='POST' action="{% url 'workoutsubmit' user_id=user.username %}" enctype='multipart/form-data'>
               {% csrf_token %}
               {{ form.as_p }}
               <input type='submit' value='Submit' />
             </form>
-
-            <!-- <form method="post" action="{% url 'playlistsubmit' user_id=user.username %}">
-              {% csrf_token %}
-              <div class="mb-3 row">
-                <label for="id_exercise_name" class="col-sm-2 col-form-label">Playlist Name:</label>
-                <div class="col-sm-10">
-                  <input type="text" name="playlist_name" maxlength="200" class="form-control"  required id="id_playlist_name">
-                </div>
-              </div>
-              {% if exercise_list %}
-                {% for exercise in exercise_list %}
-                    <input type="checkbox" id="id_exercises" name="exercises" value="{{ exercise }}">
-                    <label for=exercise.exercise_name>{{ exercise.exercise_name }}</label><br>
-                {% endfor %}
-                <input type="submit" value="Submit">
-              {% else %}
-                  <p>No Exercises to add.</p>
-              {% endif %}
-            </form> -->
 
             {% endblock %}
             
