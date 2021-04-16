@@ -81,7 +81,6 @@ def create_workout(request, user_id):
 
 
 def log_workout(request, user_id, pk):
-    context = {}
     for data in request.POST:
         try:
             name = data
@@ -90,7 +89,7 @@ def log_workout(request, user_id, pk):
             exercise.exercise_name = name
             exercise.reps = reps
             exercise.user = request.user
-            context[name] = reps 
+            exercise.date = datetime.date.today()
             exercise.save()
         except:
             continue  # need to have fallback incase of error (or maybe not)
