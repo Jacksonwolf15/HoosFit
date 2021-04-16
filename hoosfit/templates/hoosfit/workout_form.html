@@ -1,0 +1,10 @@
+<form method="POST" action="{% url 'workoutend' user_id=user.username pk=workout.id %}" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {% for exercise in workout.exercises.all %}
+    {{ exercise }} <br> 
+    &nbsp;&nbsp;&nbsp;&nbsp;Reps:
+    <input type="number" name="{{exercise.exercise_name}}" min="1" id="{{ exercise.exercise_name }}" value="{{ exercise.exercise_name }}" required><br>
+    {% endfor %}
+    <input type="submit" value="Log Workout">
+</form>
+</p>
