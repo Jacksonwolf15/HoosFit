@@ -54,22 +54,13 @@
                   <input type="text" name="exercise_name" maxlength="200" class="form-control"  required id="id_exercise_name">
                 </div>
               </div>
-              <div class="mb-3 row">
-                <label for="id_target_reps" class="col-sm-2 col-form-label">Target Reps:</label>
-                <div class="col-sm-10">
-                  <input type="number" name="target_reps" class="form-control"  required id="id_target_reps">
-                </div>
-              </div>
               <div class="row justify-content-center">
                 <input class="btn btn-primary" type="submit" value="Submit">
               </div>
             </form>
             {% endblock %}
-            
           </div>
-          
         </div>
-        
       </div>
       <div class="row justify-content-center" style="margin-top: 20px">
         <form method="get" action="{% url 'exerciseview' user_id=user.username %}">

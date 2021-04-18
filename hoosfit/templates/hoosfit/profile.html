@@ -39,7 +39,7 @@
           <div class="card-title" style="margin-top: 5px">
             <h3 align="center">Welcome, {{ user.username }} !</h3>
             <h2 align="center"><a style="color: white" href="{% url 'exercisecreate' user_id=user.username %}">Add Exercise</a></h2>
-            <h2 align="center"><a style="color: white" href="{% url 'playlistcreate' user_id=user.username %}">Create an Exercise Playlist</a></h2>
+            <h2 align="center"><a style="color: white" href="{% url 'workoutcreate' user_id=user.username %}">Start a Workout</a></h2>
           </div>
         </div>
       </div>
