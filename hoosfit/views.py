@@ -78,7 +78,3 @@ class PlaylistView(generic.ListView):
 class AwardView(generic.ListView):
     model = Award
     template_name = 'hoosfit/view_awards.html'
-
-# class StreakView(generic.DetailView):
-#     model = Streak
-#     template_name = 'hoosfit/profile.html'
