@@ -79,7 +79,6 @@ def create_workout(request, user_id):
         if form.is_valid():
             workout = form.save(commit=False)
             workout.user = request.user
-            workout.date = datetime.date.today()
             workout.save()
             form.save_m2m()
     else:
