@@ -3,15 +3,42 @@
 <html lang="en">
   <head>
     {% load static %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.0/chart.min.js'></script>
     <link rel="stylesheet" type="text/css" href="{% static 'hoosfit/style.css' %}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>Hoo's Fit</title>
   </head>
-  
+  <script>
+    let tdata = {}
+    let key = ""
+    let reps = 0
+    let prev_reps = 0
+  </script>
+        {% if weekExercises %}
+          {% for exercise in weekExercises %}
+            <script>
+              console.log("{{ exercise.date }}")
+              console.log("{{ exercise.reps }}")
+              key = "{{ exercise.date }}"
+              reps = parseInt("{{ exercise.reps }}")
+              if (tdata[key] == undefined) {
+                tdata[key] = 0
+                prev_reps = 0
+              } else {
+                prev_reps = parseInt(tdata[key])
+              }
+              tdata[key] = prev_reps + reps
+            </script>
+          {% endfor %}
+        {% else %}
+                
+        {% endif %}
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
@@ -38,20 +65,73 @@
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
     <div class="container center" style="margin-top: 5px; margin-bottom: 5px">
-        <div class="card mb-3" style="max-width: 20rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 20%">
-          {% if user.is_authenticated %}
+      {% if user.is_authenticated %}  
+        <div class="card mb-3" style="max-width: 20rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%">
+          
           <div class="card-title" style="margin-top: 5px;">
-            <h3 style="color: black" align="center">Welcome, {{ user.username }} !</h3>
+            <h2 style="color: black" align="center">Welcome, {{ user.username }} !</h3>
             <h2 align="center"><a style="color: black" href="{% url 'exercisecreate' user_id=user.username %}">Add Exercise</a></h2>
-            <h2 align="center"><a style="color: black" href="{% url 'playlistcreate' user_id=user.username %}">Create an Exercise Playlist</a></h2>
+            <h2 align="center"><a style="color: black" href="{% url 'workoutcreate' user_id=user.username %}">Create a Workout</a></h2>
           </div>
+        </div>
+        <div class="card mb-3" style="max-width: 30rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%">
+          <div class="card-title" style='margin-top: 10px'>
+            <h3 align='center'>This Week's Reps!</h3>
+            <canvas id="myChart" width="400" height="400"></canvas>
+            <script>    
+              console.log(tdata) 
+              var ctx = document.getElementById('myChart');
+              var myChart = new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                      labels: Object.keys(tdata),
+                      datasets: [{
+                          label: '# of Reps',
+                          data: Object.values(tdata),
+                          backgroundColor: [
+                              'rgba(21, 87, 209, 0.8)',
+                              'rgba(54, 162, 235, 0.8)',
+                              'rgba(255, 206, 86, 0.8)',
+                              'rgba(75, 192, 192, 0.8)',
+                              'rgba(153, 102, 255, 0.8)',
+                              'rgba(255, 159, 64, 0.8)',
+                              'rgba(255, 99, 132, 0.8)'
+                          ],
+                          borderColor: [
+                              'rgba(21, 87, 209, 1)',
+                              'rgba(54, 162, 235, 1)',
+                              'rgba(255, 206, 86, 1)',
+                              'rgba(75, 192, 192, 1)',
+                              'rgba(153, 102, 255, 1)',
+                              'rgba(255, 159, 64, 1)',
+                              'rgba(255, 99, 132, 0.2)'
+                          ],
+                          borderWidth: 1
+                      }]
+                  },
+                  options: {
+                      scales: {
+                          y: {
+                              beginAtZero: true
+                          }
+                      }
+                  }
+              });
+          </script>
+          </div>
+        </div>
           {% else %}
+          <div class="card mb-3" style="max-width: 20rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 20%"></div>
           <div class="card-title" style='margin-top: 10px'>
             <h2 align="center"><a style="color: black" href="{% provider_login_url 'google' %}">Login with Google</a></h2>
           </div>
+          </div>
           {% endif %}
-        </div>
-      </div>
+        
+        
+          
+        
+    </div>
 </body>
 <nav class="navbar fixed-bottom navbar-dark bg-primary" style="margin-top: 5px;">
   <div class="container-fluid" style="text-align: right">
