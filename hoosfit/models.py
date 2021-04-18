@@ -15,7 +15,7 @@ class Workout (models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='workouts')
     workout_name = models.CharField(max_length=200)
     exercises = models.ManyToManyField(Exercise)
-    date = models.DateField(auto_now=True)
+    date = models.DateField(default=datetime.date.today())
 
     def __str__(self):
         return self.workout_name
