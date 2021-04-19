@@ -53,7 +53,7 @@ class WorkoutSummary(generic.ListView):
     context_object_name = 'workout'
 
     def get_queryset(self):
-        return Workout.objects.filter(user__exact = self.request.user).latest('date')
+        return Exercise.objects.filter(user__exact = self.request.user, date=datetime.date.today())
 
 
 class AwardView(generic.ListView):
@@ -115,5 +115,5 @@ def log_workout(request, user_id, pk):
             exercise.date = datetime.date.today()
             exercise.save()
         except:
-            continue  # need to have fallback incase of error (or maybe not)
+            continue  
     return HttpResponseRedirect(reverse('workoutsummary', kwargs={'user_id' : user_id, 'pk' : pk})) # also need to pass data to summary

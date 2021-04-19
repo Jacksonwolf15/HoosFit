@@ -15,7 +15,7 @@
     let prev_reps = 0
   </script>
         {% if workout %}
-          {% for exercise in workout.exercises.all %}
+          {% for exercise in workout %}
             <script>
               console.log("{{ exercise.exercise_name }}")
               console.log("{{ exercise.reps }}")
@@ -63,9 +63,8 @@
     
     <div class="card mb-3" style="max-width: 30rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%">
     <div class="card-title" style='margin-top: 10px'>
-    <h1 align='center'>Great work, {{ user_id }}!</h1>
-    <h3 align='center'>Here's your summary...</h3>
-            <h3 align='center'>This Week's Reps!</h3>
+    <h1 align='center'>Great work, {{ user }}!</h1>
+    <h3 align='center'>Here's your summary for the today</h3>
             <canvas id="myChart" width="400" height="400"></canvas>
             <script>    
               console.log(tdata) 

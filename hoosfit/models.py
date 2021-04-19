@@ -26,6 +26,7 @@ class Award (models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     exercise = models.OneToOneField(Exercise, on_delete=models.CASCADE)
     award_name = models.CharField(max_length=15)
+    best_reps = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.award_name
@@ -36,13 +37,8 @@ class Profile (models.Model):
     previous_workout = models.DateField(default=datetime.date.today() - datetime.timedelta(days=1)) # yesterdayyyy all our troubles seemed so faar awayyy
     points = models.PositiveIntegerField(default=0) 
     
-
     def __str__(self):
         return self.user.username
-
-    # def valid_streak(self):
-    #     now = timezone.now()
-    #     valid_streak.boolean = True
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
