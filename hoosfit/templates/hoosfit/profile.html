@@ -72,6 +72,7 @@
             <h2 style="color: black" align="center">Welcome, {{ user.username }} !</h3>
             <h2 align="center"><a style="color: black" href="{% url 'exercisecreate' user_id=user.username %}">Add Exercise</a></h2>
             <h2 align="center"><a style="color: black" href="{% url 'workoutcreate' user_id=user.username %}">Start a Workout</a></h2>
+            <h2 align="center"><a style="color: black" href="{% url 'awardview' user_id=user.username %}">View Awards</a></h2>
             <h2 align="center"><a style="color: black" href="{% url 'leaderboard' %}">View Global Leaderboard</a></h2>
           </div>
         </div>

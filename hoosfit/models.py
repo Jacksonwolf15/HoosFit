@@ -24,9 +24,10 @@ class Workout (models.Model):
 
 class Award (models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    exercise = models.OneToOneField(Exercise, on_delete=models.CASCADE)
-    award_name = models.CharField(max_length=15)
+    exercise_name = models.CharField(max_length=200, default="")
+    award_name = models.CharField(max_length=200)
     best_reps = models.PositiveIntegerField(default=0)
+    date = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.award_name

@@ -59,6 +59,10 @@ class WorkoutSummary(generic.ListView):
 class AwardView(generic.ListView):
     model = Award
     template_name = 'hoosfit/view_awards.html'
+    context_object_name = 'awards'
+
+    def get_queryset(self):
+        return Award.objects.filter(user__exact = self.request.user)
 
 
 class LeaderboardView(generic.ListView):
@@ -99,7 +103,7 @@ def create_workout(request, user_id):
 
 def log_workout(request, user_id, pk):
     for data in request.POST:
-        try:
+        try:  # saves exercise and streak data
             name = data
             reps = request.POST[data]
             profile = Profile.objects.get(user=request.user)
@@ -114,6 +118,18 @@ def log_workout(request, user_id, pk):
             exercise.user = request.user
             exercise.date = datetime.date.today()
             exercise.save()
-        except:
-            continue  
+        except: # error occurs due to weird packet information (django thing)
+            continue  # don't care scenario
+        try: # award already exists
+            award = Award.objects.get(user=request.user, exercise_name=data)
+            if award.best_reps < request.POST[data]:
+                award.best_reps = request.POST[data]
+                award.save()
+        except Award.DoesNotExist:
+            award = Award()
+            award.user = request.user
+            award.award_name = "Personal Best: "+ data
+            award.exercise_name = data
+            award.best_reps = request.POST[data]
+            award.save()
     return HttpResponseRedirect(reverse('workoutsummary', kwargs={'user_id' : user_id, 'pk' : pk})) # also need to pass data to summary
