@@ -1,0 +1,5 @@
+<h1>Global Leaderboard</h1>
+{% for profile in profiles %}
+    {{profile.user.username}}
+    {{profile.points}} <br>
+{% endfor %}

@@ -8,7 +8,7 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 from .forms import CreateNewExercise, CreateNewWorkout
-from .models import Exercise, Workout, Award
+from .models import Exercise, Workout, Award, Profile
 
 
 # Create your views here.
@@ -20,8 +20,9 @@ def home(request):
 
 
 def profile(request, user_id):
-    request.user.profile.streak_number += 1
-    request.user.profile.save()
+    if request.user.profile.previous_workout <= (datetime.date.today() - datetime.timedelta(days=1)):
+        request.user.profile.streak_number = 0
+        request.user.profile.save()
     weekExercises = Exercise.objects.filter(user__exact = request.user, date__lte=datetime.datetime.today(), date__gte=datetime.datetime.today()-datetime.timedelta(days=7))
     return render(request, 'hoosfit/profile.html', {'weekExercises': weekExercises})
 
@@ -60,6 +61,14 @@ class AwardView(generic.ListView):
     template_name = 'hoosfit/view_awards.html'
 
 
+class LeaderboardView(generic.ListView):
+    template_name = 'hoosfit/leaderboard.html'
+    context_object_name = 'profiles'
+
+    def get_queryset(self):
+        return Profile.objects.order_by('-points')
+
+
 def create_exercise(request, user_id):
     context = {}
     if request.method == "POST":
@@ -93,6 +102,12 @@ def log_workout(request, user_id, pk):
         try:
             name = data
             reps = request.POST[data]
+            profile = Profile.objects.get(user=request.user)
+            profile.points += int(reps)
+            if profile.previous_workout < datetime.date.today():
+                profile.streak_number += 1
+            profile.previous_workout = datetime.date.today()
+            profile.save()
             exercise = Exercise()
             exercise.exercise_name = name
             exercise.reps = reps

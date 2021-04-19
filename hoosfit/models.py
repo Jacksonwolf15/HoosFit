@@ -33,7 +33,8 @@ class Award (models.Model):
 class Profile (models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=0)
     streak_number = models.PositiveIntegerField(default=0)
-    previous_login = models.DateTimeField('streak', null=True) 
+    previous_workout = models.DateField(default=datetime.date.today() - datetime.timedelta(days=1)) # yesterdayyyy all our troubles seemed so faar awayyy
+    points = models.PositiveIntegerField(default=0) 
     
 
     def __str__(self):
