@@ -30,8 +30,6 @@
         </div>
     </nav>
   </header>
-  <h1 align="center">Here are your awards!</h1>
-  <h3 align="center">You earned these, {{ user }}!</h3>
   <body style="background-color: rgb(255, 255, 255); margin-bottom: 100px;">
 
     <div class="bg"></div>
@@ -44,22 +42,23 @@
             <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-        {% if awards %}
-            {% for award in awards %}
+        <h1 style="text-align:center">Global Leaderboard</h1><br>
+            {% if profiles %}
+            {% for profile in profiles %}
               <div class="container center" style="margin-top: 5px; margin-bottom: 5px">
                 <div class="card text-white bg-dark mb-3" style="max-width: 20rem; margin: auto">
                     <div class="card-body">
-                        <h5 class="card-title">{{ award.award_name }} <br>
-                                                Reps: {{award.best_reps}} <br>
-                                                Date Earned: {{award.date}}</h5>
+                        <h5 class="card-title">Place {{forloop.counter}}: {{profile.user.username}}<br>
+                                                Reps: {{profile.points}}</h5> <!--Add more below here-->
                     </div>
                 </div>
               </div>
             {% endfor %}
         {% else %}
-            <p>No Awards.</p>
+            <p>No Exercises.</p>
         {% endif %}
         </div>
+
       </body>
 <nav class="navbar fixed-bottom navbar-dark bg-primary" style="margin-top: 100px;">
     <div class="container-fluid" style="text-align: right">

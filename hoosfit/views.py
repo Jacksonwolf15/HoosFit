@@ -8,7 +8,7 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 from .forms import CreateNewExercise, CreateNewWorkout
-from .models import Exercise, Workout, Award
+from .models import Exercise, Workout, Award, Profile
 
 
 # Create your views here.
@@ -20,8 +20,9 @@ def home(request):
 
 
 def profile(request, user_id):
-    request.user.profile.streak_number += 1
-    request.user.profile.save()
+    if request.user.profile.previous_workout <= (datetime.date.today() - datetime.timedelta(days=1)):
+        request.user.profile.streak_number = 0
+        request.user.profile.save()
     weekExercises = Exercise.objects.filter(user__exact = request.user, date__lte=datetime.datetime.today(), date__gte=datetime.datetime.today()-datetime.timedelta(days=7))
     return render(request, 'hoosfit/profile.html', {'weekExercises': weekExercises})
 
@@ -52,12 +53,24 @@ class WorkoutSummary(generic.ListView):
     context_object_name = 'workout'
 
     def get_queryset(self):
-        return Workout.objects.filter(user__exact = self.request.user).latest('date')
+        return Exercise.objects.filter(user__exact = self.request.user, date=datetime.date.today())
 
 
 class AwardView(generic.ListView):
     model = Award
     template_name = 'hoosfit/view_awards.html'
+    context_object_name = 'awards'
+
+    def get_queryset(self):
+        return Award.objects.filter(user__exact = self.request.user)
+
+
+class LeaderboardView(generic.ListView):
+    template_name = 'hoosfit/leaderboard.html'
+    context_object_name = 'profiles'
+
+    def get_queryset(self):
+        return Profile.objects.order_by('-points')
 
 
 def create_exercise(request, user_id):
@@ -90,15 +103,33 @@ def create_workout(request, user_id):
 
 def log_workout(request, user_id, pk):
     for data in request.POST:
-        try:
+        try:  # saves exercise and streak data
             name = data
             reps = request.POST[data]
+            profile = Profile.objects.get(user=request.user)
+            profile.points += int(reps)
+            if profile.previous_workout < datetime.date.today():
+                profile.streak_number += 1
+            profile.previous_workout = datetime.date.today()
+            profile.save()
             exercise = Exercise()
             exercise.exercise_name = name
             exercise.reps = reps
             exercise.user = request.user
             exercise.date = datetime.date.today()
             exercise.save()
-        except:
-            continue  # need to have fallback incase of error (or maybe not)
+        except: # error occurs due to weird packet information (django thing)
+            continue  # don't care scenario
+        try: # award already exists
+            award = Award.objects.get(user=request.user, exercise_name=data)
+            if award.best_reps < int(request.POST[data]):
+                award.best_reps = request.POST[data]
+                award.save()
+        except Award.DoesNotExist:
+            award = Award()
+            award.user = request.user
+            award.award_name = "Personal Best: "+ data
+            award.exercise_name = data
+            award.best_reps = request.POST[data]
+            award.save()
     return HttpResponseRedirect(reverse('workoutsummary', kwargs={'user_id' : user_id, 'pk' : pk})) # also need to pass data to summary

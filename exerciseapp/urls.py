@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from hoosfit.views import home, profile, create_exercise, create_workout, ExerciseCreate, ExerciseView, WorkoutCreate, AwardView, WorkoutView, log_workout, WorkoutSummary
+from hoosfit.views import home, profile, create_exercise, create_workout, ExerciseCreate, ExerciseView, WorkoutCreate, AwardView, WorkoutView, log_workout, WorkoutSummary, LeaderboardView
 
 app_name = 'exerciseapp'
 urlpatterns = [
@@ -35,7 +35,5 @@ urlpatterns = [
     path('profiles/<str:user_id>/workout/<int:pk>/submit/', log_workout, name='workoutend'),
     path('profiles/<str:user_id>/workout/<int:pk>/summary/', WorkoutSummary.as_view(), name='workoutsummary'),
     path('profiles/<str:user_id>/awards/', AwardView.as_view(), name='awardview'),
-
-
-    
+    path('leaderboard', LeaderboardView.as_view(), name='leaderboard')
 ]
