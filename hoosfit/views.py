@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.urls import reverse
 from django.views import generic
 import datetime
@@ -21,7 +22,8 @@ def home(request):
 def profile(request, user_id):
     request.user.profile.streak_number += 1
     request.user.profile.save()
-    return render(request, 'hoosfit/profile.html')
+    weekExercises = Exercise.objects.filter(user__exact = request.user, date__lte=datetime.datetime.today(), date__gte=datetime.datetime.today()-datetime.timedelta(days=7))
+    return render(request, 'hoosfit/profile.html', {'weekExercises': weekExercises})
 
 class ExerciseCreate(generic.ListView):
     model = Exercise
@@ -43,11 +45,15 @@ class WorkoutView(generic.DetailView):
     model = Workout
     template_name = 'hoosfit/workout_form.html'
     context_object_name = 'workout'
+
     
-class WorkoutSummary(generic.DetailView):
-    model = Workout
+class WorkoutSummary(generic.ListView):
     template_name = 'hoosfit/workout_summary.html'
     context_object_name = 'workout'
+
+    def get_queryset(self):
+        return Workout.objects.filter(user__exact = self.request.user).latest('date')
+
 
 class AwardView(generic.ListView):
     model = Award
@@ -75,7 +81,6 @@ def create_workout(request, user_id):
         if form.is_valid():
             workout = form.save(commit=False)
             workout.user = request.user
-            workout.date = datetime.date.today()
             workout.save()
             form.save_m2m()
     else:
