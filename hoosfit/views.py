@@ -20,6 +20,8 @@ def home(request):
 
 
 def profile(request, user_id):
+    request.user.profile.streak_number += 1
+    request.user.profile.save()
     weekExercises = Exercise.objects.filter(user__exact = request.user, date__lte=datetime.datetime.today(), date__gte=datetime.datetime.today()-datetime.timedelta(days=7))
     return render(request, 'hoosfit/profile.html', {'weekExercises': weekExercises})
 
