@@ -122,7 +122,7 @@ def log_workout(request, user_id, pk):
             continue  # don't care scenario
         try: # award already exists
             award = Award.objects.get(user=request.user, exercise_name=data)
-            if award.best_reps < request.POST[data]:
+            if award.best_reps < int(request.POST[data]):
                 award.best_reps = request.POST[data]
                 award.save()
         except Award.DoesNotExist:
