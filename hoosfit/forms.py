@@ -10,10 +10,4 @@ class CreateNewExercise(ModelForm):
 class CreateNewWorkout(ModelForm):
     class Meta:
         model = Workout
-        exclude = ['user']
-
-    workout_name = CharField()
-    exercises = ModelMultipleChoiceField(
-        queryset=Exercise.objects.filter(date=datetime.date(2000,1,1)),  # Need to filter out stuff that doesn't belong to user
-        widget=CheckboxSelectMultiple
-    )
+        exclude = ['user', 'exercises']

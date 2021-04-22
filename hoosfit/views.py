@@ -12,15 +12,18 @@ from .models import Exercise, Workout, Award, Profile
 
 
 # Create your views here.
-@login_required
+# @login_required
 def home(request):
-    return HttpResponseRedirect(
-        reverse(profile,
+    if request.user.username != "":
+        return HttpResponseRedirect(
+                reverse(profile,
                 args=[request.user.username]))
+    else:
+        return render(request, 'hoosfit/index.html')
 
 
 def profile(request, user_id):
-    if request.user.profile.previous_workout <= (datetime.date.today() - datetime.timedelta(days=1)):
+    if request.user.profile.previous_workout < (datetime.date.today() - datetime.timedelta(days=1)):
         request.user.profile.streak_number = 0
         request.user.profile.save()
     weekExercises = Exercise.objects.filter(user__exact = request.user, date__lte=datetime.datetime.today(), date__gte=datetime.datetime.today()-datetime.timedelta(days=7))
@@ -30,10 +33,13 @@ class ExerciseCreate(generic.ListView):
     model = Exercise
     template_name = 'hoosfit/exercise.html'
 
-class WorkoutCreate(CreateView):
+class WorkoutCreate(generic.ListView):
     model = Workout
-    form_class = CreateNewWorkout
     template_name = 'hoosfit/workout.html'
+    context_object_name = 'exercise_list'
+
+    def get_queryset(self):
+        return Exercise.objects.filter(user__exact = self.request.user, date=datetime.date(2000,1,1))
 
 class ExerciseView(generic.ListView):
     template_name = 'hoosfit/view_exercise.html'
@@ -81,23 +87,25 @@ def create_exercise(request, user_id):
             exercise = form.save(commit=False)
             exercise.user = request.user
             exercise.save()
-        context['form'] = form
-    else:
-        form = CreateNewExercise()
-        context['form'] = form
+        else:
+            pass
+            # Need error message
     return HttpResponseRedirect(reverse('exerciseview', kwargs={'user_id' : user_id}))
 
 
 def create_workout(request, user_id):
     if request.method == "POST":
         form = CreateNewWorkout(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.POST.get('exercises', False):
             workout = form.save(commit=False)
             workout.user = request.user
             workout.save()
-            form.save_m2m()
-    else:
-        form = CreateNewWorkout()
+            for exercise_name in request.POST.getlist('exercises'):
+                exercise = Exercise.objects.get(user=request.user, exercise_name=exercise_name, date=datetime.date(2000,1,1))
+                workout.exercises.add(exercise)
+        else:
+            pass
+            # Need error message
     return HttpResponseRedirect(reverse('workoutstart', kwargs={'user_id' : user_id, 'pk' : workout.id}))
 
 

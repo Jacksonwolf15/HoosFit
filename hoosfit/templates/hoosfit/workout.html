@@ -47,21 +47,27 @@
             {% block content %}
             <form method='POST' action="{% url 'workoutsubmit' user_id=user.username %}" enctype='multipart/form-data'>
               {% csrf_token %}
-              {{ form.as_p }}
-              <input type='submit' value='Submit' />
+              <div class="mb-10 row">
+                <label for="id_workout_name" class="col-sm-3 col-form-label">Workout Name:</label>
+                <div class="col-sm-10">
+                  <input type="text" name="workout_name" maxlength="50" class="form-control" required id="id_workout_name"><br>
+                  {% for exercise in exercise_list %}
+                    <input type="checkbox" name='exercises' id="{{exercise.exercise_name}}" value="{{exercise.exercise_name}}"/>
+                    <label for="{{exercise.exercise_name}}">{{exercise.exercise_name}} </label><br>
+                  {% endfor %}
+                  <div class="row justify-content-center">
+                    <input class="btn btn-primary" type="submit" value="Start Workout">
+                </div>
+              </div>
             </form>
-
             {% endblock %}
-            
           </div>
-          
         </div>
-        
       </div>
     </div>
 </body>
-  <nav class="navbar fixed-bottom navbar-dark bg-primary" style="margin-top: 5px;">
-    <div class="container-fluid" style="text-align: right">
-     <p class="navbar-brand">Footer</p>
-    </div>
-  </nav>
+<nav class="navbar fixed-bottom navbar-dark bg-primary">
+  <div class="container-fluid" style="text-align: right">
+   <p class="navbar-brand">Group B-07</p>
+  </div>
+</nav>
