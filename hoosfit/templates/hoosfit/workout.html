@@ -51,20 +51,34 @@
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
     <div class="container center" style="margin-top: 5px; margin-bottom: 5px">
-      <div class="card w-75" style="border: 2px solid black; margin: auto; background-color:rgba(255,255,255,1); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25);">
+      <div class="card w-75" style="border: 2px solid black; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25);">
         <div>
-          <h1 align='center' style="padding: 5px; background-color: rgb(255, 153, 0);">Select Exercises!</h1>
+          <h1 align='center' style="padding: 5px; background-color: rgba(255, 153, 0, .8);">Select Exercises!</h1>
         </div>
         <div class="card-body">
           <form method='POST' action="{% url 'workoutsubmit' user_id=user.username %}" enctype='multipart/form-data'>
             {% csrf_token %}
             {% if exercise_list %}
               <div class="form-check">
-                {% for exercise in exercise_list %}    
-                  <input class="form-check-input" type="checkbox" id="{{exercise.exercise_name}}">
-                  <label class="form-check-label" for="{{exercise.exercise_name}}">
+                <div class="mb-3 row">
+                  <label for="id_user" class="col-sm-2 col-form-label"><h5 class="card-title">User:</h5></label>
+                  <div class="col-sm-10">
+                    <input type="text" readonly class="form-control-plaintext" name="user" maxlength="200" required id="id_user" value="{{ user }}">
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="id_exercise_name" class="col-sm-2 col-form-label">Workout Name:</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="workout_name" maxlength="200" class="form-control"  required id="id_workout_name">
+                  </div>
+                </div>
+                {% for exercise in exercise_list %}
+                  <div class='row'>
+                  <input style='margin-left: 10px;' class="form-check-input" type="checkbox" id="{{exercise.exercise_name}}">
+                  <label style='margin-left: 50px;' class="form-check-label" for="{{exercise.exercise_name}}">
                     {{exercise.exercise_name}}
                   </label>
+                  </div>
                     {% endfor %}
                   <div class="row justify-content-center">
                     <input class='btn btn-primary' type="submit" value="Submit">
