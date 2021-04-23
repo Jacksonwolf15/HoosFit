@@ -48,6 +48,15 @@ class ExerciseView(generic.ListView):
     def get_queryset(self):
         return Exercise.objects.filter(user__exact = self.request.user, date=datetime.date(2000,1,1))
 
+
+class WorkoutListView(generic.ListView):
+    template_name = 'hoosfit/view_workouts.html'
+    context_object_name = 'workout_list'
+
+    def get_queryset(self):
+        return Workout.objects.filter(user__exact = self.request.user)
+
+
 class WorkoutView(generic.DetailView):
     model = Workout
     template_name = 'hoosfit/workout_form.html'
