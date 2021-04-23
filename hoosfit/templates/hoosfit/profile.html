@@ -45,6 +45,7 @@
     <header style="margin-bottom: 5px">
       <nav class="navbar navbar-dark bg-primary">
         <h1><span> <a class="badge" style="background-color: rgb(255, 153, 0); color:#000000;" href="{% url 'homepage' user_id=user.username %}">Hoo's Fit!</a></span></h1>
+        <h1 align='left' style='margin-left: -8%; color: white'>Home</h1>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
@@ -53,8 +54,23 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="{% url 'homepage' user_id=user.username %}">Home<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'exercisecreate' user_id=user.username %}">Add Exercise</a>
+                <li class="nav-item ">
+                  <a class="nav-link" href="{% url 'exercisecreate' user_id=user.username %}">Add an Exercise</a>
+                </li>
+                <li class='nav-item '>
+                  <a class='nav-link' href="{% url 'exerciseview' user_id=user.username %}">View your Exercises</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="{% url 'workoutcreate' user_id=user.username %}">Start a Workout</a>
+                </li>
+                <li class='nav-item '>
+                  <a class='nav-link' href="{% url 'workoutview' user_id=user.username %}">View your Workouts</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="{% url 'awardview' user_id=user.username %}">View Awards</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="{% url 'leaderboard' %}">View Global Leaderboard</a>
                 </li>
               </ul>
           </div>
@@ -66,17 +82,68 @@
     <div class="bg bg3"></div>
     <div class="container center" style="margin-top: 5px; margin-bottom: 5px">
       {% if user.is_authenticated %}  
-        <div class="card mb-3" style="max-width: 20rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%">
-          
-          <div class="card-title" style="margin-top: 5px;">
-            <h2 style="color: black" align="center">Welcome, {{ user.username }} !</h3>
-            <h2 align="center"><a style="color: black" href="{% url 'exercisecreate' user_id=user.username %}">Add Exercise</a></h2>
-            <h2 align="center"><a style="color: black" href="{% url 'workoutcreate' user_id=user.username %}">Start a Workout</a></h2>
-            <h2 align="center"><a style="color: black" href="{% url 'awardview' user_id=user.username %}">View Awards</a></h2>
-            <h2 align="center"><a style="color: black" href="{% url 'leaderboard' %}">View Global Leaderboard</a></h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card mb-3" style="max-width: 40rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%">
+              <div class="card-title" style="margin-top: 15px;"> 
+                <h1 style="color: black" align="center">Welcome, {{ user.username }}!</h1>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="card mb-3" style="max-width: 30rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card" style="max-width: 16rem; margin: auto;  background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%"">
+                <div class="card-body">
+                  <h5 class="card-title">Add Exercises!</h5>
+                  <p class="card-text">Add exercises to a personal library of exercises that can be added to your workouts!</p>
+                  <a href="{% url 'exercisecreate' user_id=user.username %}" class="btn btn-primary">Add an Exercise</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card" style="max-width: 18rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%"">
+                <div class="card-body">
+                  <h5 class="card-title">Workout!</h5>
+                  <p class="card-text">Log workouts each day to maintain a streak and track your progress!</p>
+                  <a href="{% url 'workoutcreate' user_id=user.username %}" class="btn btn-primary">Start a Workout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card" style="max-width: 18rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%"">
+                <div class="card-body">
+                  <h5 class="card-title">Awards!</h5>
+                  <p class="card-text">To view your achievements like personal bests you can head to the awards page!</p>
+                  <a href="{% url 'awardview' user_id=user.username %}" class="btn btn-primary">View Awards</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card" style="max-width: 18rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%"">
+                <div class="card-body">
+                  <h5 class="card-title">Global Leaderboard!</h5>
+                  <p class="card-text">Compete with and flex on other users on the global leaderboard!</p>
+                  <a href="{% url 'leaderboard' %}" class="btn btn-primary">View Global Leaderboard</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='row'>
+            <div class="col-md-12">
+              <div class="card mb-3" style="max-width: 40rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 5%">
+                <div class="card-title" style="margin-top: 15px;"> 
+                  <h3 align='center' class="card-title">Your Current Streak:</h3>
+                  <h3 align='center' class="card-text"> {{ user.profile.streak_number }} days!</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-3" style="max-width: 30rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black;">
           <div class="card-title" style='margin-top: 10px'>
             <h3 align='center'>This Week's Reps!</h3>
             <canvas id="myChart" width="400" height="400"></canvas>
@@ -122,16 +189,9 @@
           </script>
           </div>
         </div>
-      <div class="col-sm-2">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Your Streak:</h3>
-            <h5 class="card-text"> {{ user.profile.streak_number }} days!</h5>
-          </div>
-        </div>
-      </div>
+        
           {% else %}
-          <div class="card mb-3" style="max-width: 20rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 20%"></div>
+          <div class="card mb-3" style="max-width: 19rem; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25); color: black; margin-top: 20%"></div>
           <div class="card-title" style='margin-top: 10px'>
             <h2 align="center"><a style="color: black" href="{% provider_login_url 'google' %}">Login with Google</a></h2>
           </div>

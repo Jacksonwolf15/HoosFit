@@ -20,7 +20,7 @@ def home(request):
 
 
 def profile(request, user_id):
-    if request.user.profile.previous_workout <= (datetime.date.today() - datetime.timedelta(days=1)):
+    if request.user.profile.previous_workout < (datetime.date.today() - datetime.timedelta(days=1)):
         request.user.profile.streak_number = 0
         request.user.profile.save()
     weekExercises = Exercise.objects.filter(user__exact = request.user, date__lte=datetime.datetime.today(), date__gte=datetime.datetime.today()-datetime.timedelta(days=7))
@@ -30,10 +30,13 @@ class ExerciseCreate(generic.ListView):
     model = Exercise
     template_name = 'hoosfit/exercise.html'
 
-class WorkoutCreate(CreateView):
+class WorkoutCreate(generic.ListView):
     model = Workout
-    form_class = CreateNewWorkout
     template_name = 'hoosfit/workout.html'
+    context_object_name = 'exercise_list'
+
+    def get_queryset(self):
+        return Exercise.objects.filter(user__exact = self.request.user, date=datetime.date(2000,1,1))
 
 class ExerciseView(generic.ListView):
     template_name = 'hoosfit/view_exercise.html'
@@ -41,6 +44,15 @@ class ExerciseView(generic.ListView):
 
     def get_queryset(self):
         return Exercise.objects.filter(user__exact = self.request.user, date=datetime.date(2000,1,1))
+
+
+class WorkoutListView(generic.ListView):
+    template_name = 'hoosfit/view_workouts.html'
+    context_object_name = 'workout_list'
+
+    def get_queryset(self):
+        return Workout.objects.filter(user__exact = self.request.user)
+
 
 class WorkoutView(generic.DetailView):
     model = Workout
