@@ -17,13 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from hoosfit.views import home, profile, create_exercise, create_workout, ExerciseCreate, ExerciseView, WorkoutCreate, AwardView, WorkoutView, log_workout, WorkoutSummary, WorkoutListView, LeaderboardView
+from hoosfit.views import home, login, profile, create_exercise, create_workout, ExerciseCreate, ExerciseView, WorkoutCreate, AwardView, WorkoutView, log_workout, WorkoutSummary, WorkoutListView, LeaderboardView
 
 app_name = 'exerciseapp'
 urlpatterns = [
     path('', home),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('accounts/login', login),
     path('profiles/home/', home),
     path('profiles/<str:user_id>/', profile, name='homepage'),
     path('profiles/<str:user_id>/exercise/', ExerciseCreate.as_view(), name='exercisecreate'),
