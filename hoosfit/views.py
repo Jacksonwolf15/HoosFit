@@ -21,9 +21,6 @@ def home(request):
     else:
         return render(request, 'hoosfit/index.html')
 
-def login(request):
-    return render(request, 'hoosfit/login.html')
-
 
 def profile(request, user_id):
     if request.user.profile.previous_workout < (datetime.date.today() - datetime.timedelta(days=1)):
