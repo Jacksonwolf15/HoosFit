@@ -50,9 +50,9 @@
     <div class="bg"></div>
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
-    <div class="card w-75" style="border: 2px solid black; margin: auto; background-color:rgba(255,255,255,1); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25);">
+    <div class="card w-75" style="max-width: 38em; border: 2px solid black; margin: auto; background-color:rgba(255,255,255,.8); border-radius: .25em; box-shadow:0 0 .25em rgba(0,0,0,.25);">
         <div>
-          <h1 align='center' style="padding: 5px; background-color: rgb(255, 153, 0);">Log Your Workout!</h1>
+          <h1 align='center' style="padding: 5px; background-color: rgba(255, 153, 0, .8);">Log Your Workout!</h1>
         </div>
           <div class="card-body">
                 <form method="POST" action="{% url 'workoutend' user_id=user.username pk=workout.id %}" enctype='multipart/form-data'>
