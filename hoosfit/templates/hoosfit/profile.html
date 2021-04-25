@@ -202,6 +202,13 @@
 <nav class="navbar fixed-bottom navbar-dark bg-primary" style="margin-top: 5px;">
   <div class="container-fluid" style="text-align: right">
     <p class="navbar-brand">Group B-07</p>
+    <form method="post" action="{% url 'account_logout' %}">
+      {% csrf_token %}
+      {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+      {% endif %}
+      <button class="btn btn-primary" type="submit">Logout</button>
+    </form>
   </div>
 </nav>
 
