@@ -21,13 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'r+8h%)a7_cz2u!43ra)ng3edt0=l+eqs@fmct@9mp*x)k6g9!n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True
 
-SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -153,6 +153,11 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+SOCIALACCOUNT_ADAPTER = 'hoosfit.adapters.MySocialAccount'
+
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+
 
 # Activate Django-Heroku.
 try:
