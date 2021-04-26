@@ -9,6 +9,31 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 from .forms import CreateNewExercise, CreateNewWorkout
 from .models import Exercise, Workout, Award, Profile
+import random
+
+
+motivations=[
+'Create a Positive Environment',
+ 'The Best Way To Get Started Is To Quit Talking And Begin Doing',
+ 'Don’t Let Yesterday Take Up Too Much Of Today',
+'We May Encounter Many Defeats But We Must Not Be Defeated',
+'We Generate Fears While We Sit. We Overcome Them By Action',
+'Whether You Think You Can Or Think You Can’t, You’re Right',
+'Do What You Can With All You Have, Wherever You Are',
+'No pain, no gain. Shut up and train',
+'Your body can stand almost anything. It’s your mind that you have to convince',
+'Train insane or remain the same',
+'Push yourself because no one else is going to do it for you',
+'Suck it up. And one day you won’t have to suck it in.',
+'Success starts with self-discipline',
+'Good things come to those who sweat',
+'A one hour workout is 4 percent of your day. No excuses.',
+'The body achieves what the mind believes',
+'What seems impossible today will one day become your warm-up',
+'Hustle for that muscle',
+'The hardest lift of all is lifting your butt off the couch.',
+'When you feel like quitting think about why you started',
+]
 
 
 # Create your views here.
@@ -26,8 +51,11 @@ def profile(request, user_id):
     if request.user.profile.previous_workout < (datetime.date.today() - datetime.timedelta(days=1)):
         request.user.profile.streak_number = 0
         request.user.profile.save()
+    context={}
+    context['quote']=random.choice(motivations)
     weekExercises = Exercise.objects.filter(user__exact = request.user, date__lte=datetime.datetime.today(), date__gte=datetime.datetime.today()-datetime.timedelta(days=7))
-    return render(request, 'hoosfit/profile.html', {'weekExercises': weekExercises})
+    context['weekExercises']=weekExercises
+    return render(request, 'hoosfit/profile.html', context)
 
 class ExerciseCreate(generic.ListView):
     model = Exercise
