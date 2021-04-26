@@ -137,8 +137,8 @@ def create_workout(request, user_id):
             workout = form.save(commit=False)
             workout.user = request.user
             workout.save()
-            for exercise_name in request.POST.getlist('exercises'):
-                exercise = Exercise.objects.get(user=request.user, exercise_name=exercise_name, date=datetime.date(2000,1,1))
+            for id_ in request.POST.getlist('exercises'):
+                exercise = Exercise.objects.get(user=request.user, id=id_, date=datetime.date(2000,1,1))
                 workout.exercises.add(exercise)
         else:
             pass
