@@ -123,7 +123,9 @@ def create_exercise(request, user_id):
         if form.is_valid():
             exercise = form.save(commit=False)
             exercise.user = request.user
-            exercise.save()
+            ex = Exercise.objects.filter(user__exact = request.user, exercise_name__iexact = exercise.exercise_name)
+            if ex.count() == 0:
+                exercise.save()
         else:
             pass
             # Need error message
