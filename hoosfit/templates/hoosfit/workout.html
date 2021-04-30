@@ -63,12 +63,12 @@
                 <div class="mb-3 row">
                   <label for="id_workout_name" class="col-sm-2 col-form-label">Workout Name:</label>
                   <div class="col-sm-10">
-                    <input type="text" name="workout_name" maxlength="200" class="form-control"  required id="id_workout_name" value="{{exercise.exercise_name}}">
+                    <input type="text" name="workout_name" maxlength="200" class="form-control"  required id="id_workout_name" value="{{exercise.exercise_name}}" required>
                   </div>
                 </div>
                 {% for exercise in exercise_list %}
                   <div class='row'>
-                  <input style='margin-left: 10px;' class="form-check-input" type="checkbox" id="{{exercise.exercise_name}}" name='exercises' value="{{exercise.id}}">
+                  <input style='margin-left: 10px;' class="form-check-input" type="checkbox" id="{{exercise.exercise_name}}" name='exercises' value="{{exercise.id}}" >
                   <label style='margin-left: 50px;' class="form-check-label" for="{{exercise.exercise_name}}">
                     {{exercise.exercise_name}}
                   </label>
