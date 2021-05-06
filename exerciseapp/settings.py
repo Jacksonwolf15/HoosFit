@@ -154,6 +154,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+
 SOCIALACCOUNT_ADAPTER = 'hoosfit.adapters.MySocialAccount'
 
 SOCIALACCOUNT_EMAIL_REQUIRED = True
