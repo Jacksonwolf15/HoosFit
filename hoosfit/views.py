@@ -121,14 +121,13 @@ def create_exercise(request, user_id):
     if request.method == "POST":
         form = CreateNewExercise(request.POST)
         if form.is_valid():
-            exercise = form.save(commit=False)
-            exercise.user = request.user
-            ex = Exercise.objects.filter(user__exact = request.user, exercise_name__iexact = exercise.exercise_name)
+            ex = Exercise.objects.filter(user__exact = request.user, exercise_name__iexact = request.POST['exercise_name'])
             if ex.count() == 0:
+                exercise = form.save(commit=False)
+                exercise.user = request.user
                 exercise.save()
         else:
             pass
-            # Need error message
     return HttpResponseRedirect(reverse('exerciseview', kwargs={'user_id' : user_id}))
 
 
@@ -144,7 +143,6 @@ def create_workout(request, user_id):
                 workout.exercises.add(exercise)
         else:
             pass
-            # Need error message
     return HttpResponseRedirect(reverse('workoutstart', kwargs={'user_id' : user_id, 'pk' : workout.id}))
 
 
@@ -165,7 +163,7 @@ def log_workout(request, user_id, pk):
             exercise.user = request.user
             exercise.date = datetime.date.today()
             exercise.save()
-        except: # error occurs due to weird packet information (django thing)
+        except: # error occurs due to weird packet information (REST thing)
             continue  # don't care scenario
         try: # award already exists
             award = Award.objects.get(user=request.user, exercise_name=data)
@@ -179,4 +177,4 @@ def log_workout(request, user_id, pk):
             award.exercise_name = data
             award.best_reps = request.POST[data]
             award.save()
-    return HttpResponseRedirect(reverse('workoutsummary', kwargs={'user_id' : user_id, 'pk' : pk})) # also need to pass data to summary
+    return HttpResponseRedirect(reverse('workoutsummary', kwargs={'user_id' : user_id, 'pk' : pk}))
