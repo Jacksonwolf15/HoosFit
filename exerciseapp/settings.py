@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'r+8h%)a7_cz2u!43ra)ng3edt0=l+eqs@fmct@9mp*x)k6g9!n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # SECURE_SSL_REDIRECT = True
 
@@ -96,6 +96,8 @@ DATABASES = {
     }
 }
 
+if 'test' in sys.argv:
+    DATABASES['default'] = {'ENGINE' : 'django.db.backends.sqlite3'}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
