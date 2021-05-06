@@ -154,7 +154,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+DEFAULT_AUTO_FIELD='django.db.models.BigAutoField'
 
 SOCIALACCOUNT_ADAPTER = 'hoosfit.adapters.MySocialAccount'
 
