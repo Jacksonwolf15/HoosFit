@@ -7,7 +7,7 @@ class MySocialAccount(DefaultSocialAccountAdapter):
     def pre_social_login(self, request, sociallogin):
         u = sociallogin.user
         if not u.email.split('@')[1] == "virginia.edu":
-            return render(request, 'hoosfit/index2.html')
+            return render(request, 'hoosfit/index.html')
     def populate_user(self, request, sociallogin, data):
         email = data.get("email")
         username = email.split('@')[0]
