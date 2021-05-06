@@ -39,7 +39,7 @@ motivations=[
 # Create your views here.
 # @login_required
 def home(request):
-    if request.user.username != "":
+    if request.user.email.split('@')[1] == "virginia.edu":
         return HttpResponseRedirect(
                 reverse(profile,
                 args=[request.user.username]))
