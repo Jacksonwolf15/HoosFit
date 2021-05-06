@@ -45,7 +45,7 @@ def home(request):
                     reverse(profile,
                     args=[request.user.username]))
         else:
-            return render(request, 'hoosfit/index.html')
+            return render(request, 'hoosfit/index2.html')
     else:
         return render(request, 'hoosfit/index.html')
 
