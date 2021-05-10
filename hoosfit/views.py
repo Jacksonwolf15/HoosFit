@@ -40,12 +40,9 @@ motivations=[
 # @login_required
 def home(request):
     if request.user.username != "":
-        if request.user.email.split('@')[1] == "virginia.edu":
-            return HttpResponseRedirect(
+        return HttpResponseRedirect(
                     reverse(profile,
                     args=[request.user.username]))
-        else:
-            return render(request, 'hoosfit/index2.html')
     else:
         return render(request, 'hoosfit/index.html')
 
