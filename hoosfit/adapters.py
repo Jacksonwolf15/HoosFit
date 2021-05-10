@@ -2,6 +2,7 @@ from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.exceptions import ImmediateHttpResponse
 from django.http import HttpResponse
+from django.shortcuts import render
 
 class MySocialAccount(DefaultSocialAccountAdapter):
     def populate_user(self, request, sociallogin, data):
