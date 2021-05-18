@@ -7,13 +7,23 @@
 <li>After submitting your log, your profile will update and points will be given. You can check the global leaderboard to see where you stand, or check your personal bests on specific exercises.</li>
 
 
+
 ## Sources Used
 
-Bootstrap 4 Docs:
+## Sources Used
+
+Bootstrap 4 Docs: 
+<br/>
 https://getbootstrap.com/docs/4.0/
+<br/>
 Charts JS Docs:
+<br/>
 https://www.chartjs.org/
+<br/>
 Django Documentation:
+<br/>
 https://docs.djangoproject.com/en/3.2/
+<br/>
 Animation Examples:
+<br/>
 https://www.sliderrevolution.com/resources/css-animated-background/
